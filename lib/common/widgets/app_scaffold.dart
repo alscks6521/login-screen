@@ -1,24 +1,28 @@
+import 'package:daelim_univ/common/app_drawer.dart';
 import 'package:flutter/material.dart';
 
 class AppScaffold extends StatelessWidget {
   final FloatingActionButton? floatActionButton;
   final PreferredSizeWidget? appBar;
-  final Widget? drawer;
+
+  final bool drawerEnableOpenDragGesture;
   final Widget child;
 
   const AppScaffold({
     super.key,
     this.floatActionButton,
     this.appBar,
-    this.drawer, //햄버거
+    required this.drawerEnableOpenDragGesture,
     required this.child,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
       appBar: appBar,
-      endDrawer: const Drawer(),
+      drawer: const AppDrawer(),
+      floatingActionButton: floatActionButton,
       body: SafeArea(
         child: child,
       ),

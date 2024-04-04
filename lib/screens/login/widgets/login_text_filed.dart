@@ -18,7 +18,7 @@ class LoginTextFiled extends StatelessWidget {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       decoration: InputDecoration(
-        hintText: labelText,
+        labelText: labelText,
         border: const OutlineInputBorder(),
       ),
     );

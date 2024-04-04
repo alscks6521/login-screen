@@ -7,16 +7,11 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+        drawerEnableOpenDragGesture: true,
         appBar: AppBar(
           title: const Text(
             '메인',
-            style: TextStyle(color: Colors.blue, fontSize: 25),
           ),
-        ),
-        drawer: Container(
-          width: double.infinity,
-          height: double.infinity,
-          color: Colors.green,
         ),
         child: const Placeholder());
   }
