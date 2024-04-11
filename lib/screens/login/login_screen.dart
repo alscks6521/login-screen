@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:daelim_univ/common/app_assets.dart';
 import 'package:daelim_univ/common/widgets/app_icon_text_btn.dart';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
@@ -17,21 +16,21 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late TextEditingController idController;
-  late TextEditingController pwController;
+  late TextEditingController _emailController;
+  late TextEditingController _pwController;
 
   @override
   void initState() {
-    idController = TextEditingController();
-    pwController = TextEditingController();
     super.initState();
+    _emailController = TextEditingController();
+    _pwController = TextEditingController();
   }
 
   @override
   void dispose() {
     // valueController?.dispose();
-    idController.dispose();
-    pwController.dispose();
+    _emailController.dispose();
+    _pwController.dispose();
 
     super.dispose();
   }
@@ -39,11 +38,11 @@ class _LoginScreenState extends State<LoginScreen> {
   Future<void> _signup() async {
     // 로그인 API
     var response = await http.post(
-      Uri.parse('http://121.140.73.79:18000/functions/v1/auth/signup'),
+      Uri.parse('http://175.197.109.158:60080/functions/v1/auth/signup'),
       body: jsonEncode(
         {
-          'email': idController.text,
-          'password': pwController.text,
+          'email': _emailController.text,
+          'password': _pwController.text,
           'name': '김민성',
           'student_number': '201930405',
         },
@@ -83,19 +82,17 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 40,
               ),
-              SizedBox(
-                  child: LoginTextFiled(
-                controller: idController,
+
+              LoginTextFiled(
+                controller: _emailController,
                 labelText: 'ID',
-              )),
+              ),
               const SizedBox(
                 height: 20,
               ),
-              SizedBox(
-                child: LoginTextFiled(
-                  controller: pwController,
-                  labelText: 'PW',
-                ),
+              LoginTextFiled(
+                controller: _pwController,
+                labelText: 'PW',
               ),
               SizedBox(
                 child: Row(
@@ -111,12 +108,13 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(
                 height: 40,
               ),
+              // 로그인 버튼
               AppIconTextBtn(
                 icon: Icons.login,
                 text: '로그인',
                 onPressed: () {
-                  var id = idController.text;
-                  var pw = pwController.text;
+                  var id = _emailController.text;
+                  var pw = _pwController.text;
 
                   debugPrint('아이디: $id, 패스워드: $pw');
 
@@ -128,17 +126,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   // context.push(AppScreen.main); go는 뒤로가기x
                 },
               ),
+              // 회원가입 버튼
               MaterialButton(
                 onPressed: () {
-                  // var text = value.buildTextSpan(context: context, withComposing: true);
-                  var text = idController.text;
-                  debugPrint('textContorller: $text');
+                  context.push(AppScreen.signup);
                 },
                 color: Colors.yellow,
-                child: const Text('Material Login'),
-              ),
-              const SizedBox(
-                height: 50,
+                child: const Text('회원가입'),
               ),
             ],
           ),

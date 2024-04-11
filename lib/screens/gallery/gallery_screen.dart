@@ -9,7 +9,7 @@ class GalleryScreen extends StatelessWidget {
 
   Future<void> _fetchData() async {
     final response = await http.post(
-      Uri.parse('http://121.140.73.79:18000/functions/v1/gallery'),
+      Uri.parse('http://175.197.109.158:60080/functions/v1/gallery'),
       body: jsonEncode({
         'q': '봄',
       }),
