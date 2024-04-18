@@ -7,7 +7,7 @@ class AppDrawer extends StatelessWidget {
   Widget _ListTile(BuildContext context,
       {required String path, required IconData icon, required String title}) {
     return ListTile(
-      onTap: () => router.go(path),
+      onTap: () => router.push(path),
       leading: Icon(icon),
       title: Text(title),
       trailing: const Icon(Icons.arrow_right),

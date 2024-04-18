@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:daelim_univ/common/app_assets.dart';
 import 'package:daelim_univ/common/widgets/app_icon_text_btn.dart';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
@@ -35,33 +36,64 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  Future<void> _signup() async {
-    // 로그인 API
-    var response = await http.post(
-      Uri.parse('http://175.197.109.158:60080/functions/v1/auth/signup'),
-      body: jsonEncode(
-        {
-          'email': _emailController.text,
-          'password': _pwController.text,
-          'name': '김민성',
-          'student_number': '201930405',
-        },
-      ),
+  // Widget _box(Color color) {
+  //   return Container(
+  //     color: color,
+  //     width: 200,
+  //     height: 80,
+  //   );
+  // }
+
+  Future<void> _login() async {
+    var id = _emailController.text;
+    var pw = _pwController.text;
+
+    debugPrint('아이디: $id, 패스워드: $pw');
+    /*
+    curl -X POST 'https://121.140.73.79:60080/functions/v1/auth/login' \
+    -H 'Content-Type: application/json' \
+    -d '{
+        "email": "대림대 이메일",
+        "password": "비밀번호",
+  }'
+  */
+    await http
+        .post(
+      Uri.parse('http://121.140.73.79:60080/functions/v1/auth/login'),
+      body: jsonEncode({
+        'email': id,
+        'password': pw,
+      }),
+    )
+        .then(
+      (response) {
+        if (response.statusCode != 200) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('로그인을 실패했습니다. : ${response.statusCode}'),
+            ),
+          );
+          return;
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('로그인을 성공했습니다.'),
+          ),
+        );
+        debugPrint('성공: ${response.body}');
+        context.pushReplacement(AppScreen.main);
+        // context.push(AppScreen.main); go는 뒤로가기x
+      },
     );
 
-    if (response.statusCode == 200) {
-      debugPrint('성공:${response.statusCode}, ${response.body}');
-    } else {
-      return debugPrint('에러:${response.statusCode}, ${response.body}');
-    }
-  }
+    //     .catchError(
+    //   (e, StackTrace) {
+    //     debugPrint('에러: $e, $StackTrace');
+    //     return http.Response('$e', 410);
+    //   },
+    // );
 
-  Widget _box(Color color) {
-    return Container(
-      color: color,
-      width: 200,
-      height: 80,
-    );
+    // if (id != '201930405@daelim.ac.kr' || pw != '1234') return;
   }
 
   @override
@@ -92,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               LoginTextFiled(
                 controller: _pwController,
+                obscureText: true,
                 labelText: 'PW',
               ),
               SizedBox(
@@ -113,23 +146,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 icon: Icons.login,
                 text: '로그인',
                 onPressed: () {
-                  var id = _emailController.text;
-                  var pw = _pwController.text;
-
-                  debugPrint('아이디: $id, 패스워드: $pw');
-
-                  if (id != '201930405@daelim.ac.kr' || pw != '1234') return;
-
-                  _signup();
-
-                  context.go(AppScreen.main);
-                  // context.push(AppScreen.main); go는 뒤로가기x
+                  _login();
                 },
               ),
               // 회원가입 버튼
               MaterialButton(
                 onPressed: () {
-                  context.push(AppScreen.signup);
+                  context.go(AppScreen.signup);
                 },
                 color: Colors.yellow,
                 child: const Text('회원가입'),

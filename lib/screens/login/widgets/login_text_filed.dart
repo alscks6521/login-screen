@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class LoginTextFiled extends StatelessWidget {
-  @override
   final GlobalKey<FormState>? formKey;
   final TextEditingController controller;
   final bool obscureText;

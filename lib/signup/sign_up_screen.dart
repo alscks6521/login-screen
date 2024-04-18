@@ -1,12 +1,11 @@
 import 'dart:convert';
-
 import 'package:daelim_univ/common/widgets/app_icon_text_btn.dart';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
+import 'package:daelim_univ/router/app_router.dart';
 import 'package:daelim_univ/screens/login/widgets/login_text_filed.dart';
 import 'package:easy_extension/easy_extension.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 class SignUpScreen extends StatefulWidget {
@@ -62,6 +61,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            context.pushReplacement(AppScreen.login);
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
+      ),
       drawerEnableOpenDragGesture: false,
       child: Column(
         children: [
@@ -106,27 +113,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
               final email = _emailController.text;
               final pw = _pwController.text;
-
               final name = _nameController.text;
               final studentNumber = _stnController.text;
 
               debugPrint('$email, $pw, $name, $studentNumber');
 
-              // var response = await http.post(
-              //   Uri.parse('http://175.197.109.158:60080/functions/v1/auth/signup'),
-              //   body: jsonEncode(
-              //     {
-              //       'email': email,
-              //       'password': pw,
-              //       'name': name,
-              //       'student_number': studentNumber,
-              //     },
-              //   ),
-              // );
+              var response = await http.post(
+                Uri.parse('http://121.140.73.79:60080/functions/v1/auth/signup'),
+                body: jsonEncode({
+                  'email': email,
+                  'password': pw,
+                  'name': name,
+                  'student_number': studentNumber,
+                }),
+              );
 
-              // if (response.statusCode != 200) return;
+              var status = response.statusCode;
+              var body = response.body;
 
-              // var jsonString = response.body;
+              if (status != 200) {
+                return debugPrint('회원가입 에러: $status, $body');
+              }
+
+              debugPrint('회원가입 성공: $body');
             },
             text: '회원가입',
           ),
