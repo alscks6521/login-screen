@@ -1,11 +1,22 @@
 import 'package:daelim_univ/main/main_screen.dart';
+import 'package:daelim_univ/provider/auth_controller.dart';
 import 'package:daelim_univ/screens/gallery/gallery_screen.dart';
 import 'package:daelim_univ/screens/login/login_screen.dart';
 import 'package:daelim_univ/signup/sign_up_screen.dart';
+import 'package:get/instance_manager.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
   initialLocation: AppScreen.login,
+  redirect: (context, state) {
+    final controller = Get.find<AuthController>();
+
+    if (controller.getUserData != null) {
+      return null;
+    } else {
+      return AppScreen.login;
+    }
+  },
   routes: [
     GoRoute(
       path: AppScreen.login,

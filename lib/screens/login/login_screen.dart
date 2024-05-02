@@ -1,13 +1,12 @@
-import 'dart:convert';
-
 import 'package:daelim_univ/common/app_assets.dart';
 import 'package:daelim_univ/common/widgets/app_icon_text_btn.dart';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
+import 'package:daelim_univ/provider/auth_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
 import 'package:daelim_univ/screens/login/widgets/login_text_filed.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,6 +16,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _controller = Get.find<AuthController>();
+
   late TextEditingController _emailController;
   late TextEditingController _pwController;
 
@@ -36,13 +37,27 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  // Widget _box(Color color) {
-  //   return Container(
-  //     color: color,
-  //     width: 200,
-  //     height: 80,
-  //   );
-  // }
+  Future<void> _signin() async {
+    var email = _emailController.text;
+    var password = _pwController.text;
+
+    var result = await _controller.signin(
+      email: email,
+      password: password,
+    );
+
+    var succes = result.$1;
+    var errorMsg = result.$2;
+
+    if (succes) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('로그인을 성공했습니다.'),
+        ),
+      );
+      context.pushReplacement(AppScreen.main);
+    }
+  }
 
   Future<void> _login() async {
     var id = _emailController.text;
@@ -57,34 +72,34 @@ class _LoginScreenState extends State<LoginScreen> {
         "password": "비밀번호",
   }'
   */
-    await http
-        .post(
-      Uri.parse('http://121.140.73.79:60080/functions/v1/auth/login'),
-      body: jsonEncode({
-        'email': id,
-        'password': pw,
-      }),
-    )
-        .then(
-      (response) {
-        if (response.statusCode != 200) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('로그인을 실패했습니다. : ${response.statusCode}'),
-            ),
-          );
-          return;
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('로그인을 성공했습니다.'),
-          ),
-        );
-        debugPrint('성공: ${response.body}');
-        context.pushReplacement(AppScreen.main);
-        // context.push(AppScreen.main); go는 뒤로가기x
-      },
-    );
+    // var response = await http
+    //     .post(
+    //   Uri.parse('http://121.140.73.79:60080/functions/v1/auth/login'),
+    //   body: jsonEncode({
+    //     'email': id,
+    //     'password': pw,
+    //   }),
+    // )
+    //     .then(
+    //   (response) {
+    //     if (response.statusCode != 200) {
+    //       ScaffoldMessenger.of(context).showSnackBar(
+    //         SnackBar(
+    //           content: Text('로그인을 실패했습니다. : ${response.statusCode}'),
+    //         ),
+    //       );
+    //       return;
+    //     }
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       const SnackBar(
+    //         content: Text('로그인을 성공했습니다.'),
+    //       ),
+    //     );
+    //     debugPrint('성공: ${response.body}');
+    //     context.pushReplacement(AppScreen.main);
+    //     // context.push(AppScreen.main); go는 뒤로가기x
+    //   },
+    // );
 
     //     .catchError(
     //   (e, StackTrace) {
@@ -145,9 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
               AppIconTextBtn(
                 icon: Icons.login,
                 text: '로그인',
-                onPressed: () {
-                  _login();
-                },
+                onPressed: _signin,
               ),
               // 회원가입 버튼
               MaterialButton(

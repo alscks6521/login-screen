@@ -69,6 +69,7 @@ class GalleryItem {
   int get hashCode => total.hashCode ^ totalHits.hashCode ^ hits.hashCode;
 }
 
+//--------------------------
 class GalleryItemHints {
   final String tags;
   final String webformatURL;
