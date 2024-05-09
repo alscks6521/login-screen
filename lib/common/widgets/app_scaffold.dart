@@ -21,7 +21,7 @@ class AppScaffold extends StatelessWidget {
     return Scaffold(
       drawerEnableOpenDragGesture: drawerEnableOpenDragGesture,
       appBar: appBar,
-      drawer: const AppDrawer(),
+      drawer: drawerEnableOpenDragGesture ? const AppDrawer() : null,
       floatingActionButton: floatActionButton,
       body: SafeArea(
         child: child,

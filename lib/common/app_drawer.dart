@@ -1,14 +1,17 @@
 import 'package:daelim_univ/provider/auth_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
-  Widget _ListTile(BuildContext context,
-      {required String path, required IconData icon, required String title}) {
+  Widget _ListTile(
+    BuildContext context, {
+    required String path,
+    required IconData icon,
+    required String title,
+  }) {
     return ListTile(
       onTap: () => router.push(path),
       leading: Icon(icon),
@@ -40,9 +43,24 @@ class AppDrawer extends StatelessWidget {
           Expanded(
             child: ListView(
               children: [
-                _ListTile(context, path: AppScreen.main, icon: Icons.home, title: "Home"),
-                _ListTile(context,
-                    path: AppScreen.gallery, icon: Icons.browse_gallery, title: "Gallery")
+                _ListTile(
+                  context,
+                  path: AppScreen.main,
+                  icon: Icons.home,
+                  title: "Home",
+                ),
+                _ListTile(
+                  context,
+                  path: AppScreen.lifecycle,
+                  icon: Icons.cyclone,
+                  title: "Lifecycle",
+                ),
+                _ListTile(
+                  context,
+                  path: AppScreen.gallery,
+                  icon: Icons.browse_gallery,
+                  title: "Gallery",
+                )
               ],
             ),
           ),

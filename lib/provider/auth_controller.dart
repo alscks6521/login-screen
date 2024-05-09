@@ -39,9 +39,9 @@ class AuthController extends GetxController {
     }
 
     var bodyJson = jsonDecode(utf8.decode(response.bodyBytes));
-    Log.green(bodyJson.toString());
+    // Log.green(bodyJson.toString());
     _userData = UserData.fromMap(bodyJson);
-    debugPrint('_userData = $_userData');
+    // debugPrint('_userData = $_userData');
 
     Log.green(bodyJson.toString());
 
