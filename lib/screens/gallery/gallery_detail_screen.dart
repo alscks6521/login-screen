@@ -54,7 +54,7 @@ class _GalleryDetailScreenState extends State<GalleryDetailScreen> {
                   ///# Images
                   Positioned.fill(
                     child: Hero(
-                      tag: '${_item.id}',
+                      tag: _item.id,
                       child: Image.network(
                         _item.webformatURL,
                         fit: BoxFit.cover,

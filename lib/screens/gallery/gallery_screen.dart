@@ -1,7 +1,6 @@
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
 import 'package:daelim_univ/provider/gallery_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
-import 'package:easy_extension/easy_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -62,27 +61,29 @@ class _GalleryScreenState extends State<GalleryScreen> {
                 itemCount: _controller.rxGalleryItem.value?.hits.length ?? 0,
                 itemBuilder: (context, index) {
                   var item = _controller.rxGalleryItem.value?.hits[index];
+
                   return GestureDetector(
-                    onTap: () => {
-                      if (item?.largeImageURL != null)
-                        {
-                          precacheImage(Image.network(item!.largeImageURL).image, context),
-                        },
+                    onTap: () async {
+                      if (item?.largeImageURL != null) {
+                        await precacheImage(
+                          Image.network(item!.largeImageURL).image,
+                          context,
+                        );
+                      }
                       // Log.green({item?.toJson()}),
-                      if (context.mounted)
-                        {
-                          context.pushNamed(
-                            AppScreen.gallerydetail,
-                            pathParameters: {
-                              'id': (item?.id ?? -1).toString(),
-                            },
-                          ),
-                        }
+                      if (context.mounted) {
+                        context.pushNamed(
+                          AppScreen.gallerydetail,
+                          pathParameters: {
+                            'id': (item?.id ?? -1).toString(),
+                          },
+                        );
+                      }
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Hero(
-                        tag: '${item?.id}',
+                        tag: item?.id ?? -1,
                         child: Image.network(
                           item?.webformatURL ?? '',
                           fit: BoxFit.cover,
