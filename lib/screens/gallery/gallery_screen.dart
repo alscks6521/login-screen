@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
-import 'package:daelim_univ/models/gallery_item.dart';
 import 'package:daelim_univ/provider/gallery_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
 import 'package:easy_extension/easy_extension.dart';
@@ -45,7 +43,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
           Icons.refresh,
         ),
       ),
-      child: Obx(() => _controller.rxGgalleryItem.value == null
+      child: Obx(() => _controller.rxGalleryItem.value == null
           ? const Center(
               child: CircularProgressIndicator(),
             )
@@ -61,24 +59,34 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   mainAxisSpacing: 10,
                   crossAxisSpacing: 10,
                 ),
-                itemCount: _controller.rxGgalleryItem.value?.hits.length ?? 0,
+                itemCount: _controller.rxGalleryItem.value?.hits.length ?? 0,
                 itemBuilder: (context, index) {
-                  var item = _controller.rxGgalleryItem.value?.hits[index];
+                  var item = _controller.rxGalleryItem.value?.hits[index];
                   return GestureDetector(
                     onTap: () => {
-                      Log.green({item?.toJson()}),
-                      context.pushNamed(
-                        AppScreen.gallerydetail,
-                        pathParameters: {
-                          'id': (item?.id ?? -1).toString(),
+                      if (item?.largeImageURL != null)
+                        {
+                          precacheImage(Image.network(item!.largeImageURL).image, context),
                         },
-                      ),
+                      // Log.green({item?.toJson()}),
+                      if (context.mounted)
+                        {
+                          context.pushNamed(
+                            AppScreen.gallerydetail,
+                            pathParameters: {
+                              'id': (item?.id ?? -1).toString(),
+                            },
+                          ),
+                        }
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        item?.webformatURL ?? '',
-                        fit: BoxFit.fill,
+                      child: Hero(
+                        tag: '${item?.id}',
+                        child: Image.network(
+                          item?.webformatURL ?? '',
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   );

@@ -5,18 +5,24 @@ class UserData {
   /// API 토큰
   final String accessToken;
 
-  /// 토큰 만료 시간
+  /// 토큰 만료 시간 (초)
   final int expireAt;
 
+  /// 이메일
   final String email;
+
+  /// 이름
   final String name;
-  final String studentNumber;
+
+  /// 학번
+  final String stdNumber;
+
   UserData({
     required this.accessToken,
     required this.expireAt,
     required this.email,
     required this.name,
-    required this.studentNumber,
+    required this.stdNumber,
   });
 
   UserData copyWith({
@@ -24,14 +30,14 @@ class UserData {
     int? expireAt,
     String? email,
     String? name,
-    String? studentNumber,
+    String? stdNumber,
   }) {
     return UserData(
       accessToken: accessToken ?? this.accessToken,
       expireAt: expireAt ?? this.expireAt,
       email: email ?? this.email,
       name: name ?? this.name,
-      studentNumber: studentNumber ?? this.studentNumber,
+      stdNumber: stdNumber ?? this.stdNumber,
     );
   }
 
@@ -41,7 +47,7 @@ class UserData {
       'expireAt': expireAt,
       'email': email,
       'name': name,
-      'studentNumber': studentNumber,
+      'stdNumber': stdNumber,
     };
   }
 
@@ -51,7 +57,7 @@ class UserData {
       expireAt: map['expires_at'] as int,
       email: map['email'] as String,
       name: map['name'] as String,
-      studentNumber: map['student_number'] as String,
+      stdNumber: map['student_number'] as String,
     );
   }
 
@@ -62,7 +68,7 @@ class UserData {
 
   @override
   String toString() {
-    return 'UserData(accessToken: $accessToken, expireAt: $expireAt, email: $email, name: $name, studentNumber: $studentNumber)';
+    return 'UserData(accessToken: $accessToken, expireAt: $expireAt, email: $email, name: $name, stdNumber: $stdNumber)';
   }
 
   @override
@@ -73,7 +79,7 @@ class UserData {
         other.expireAt == expireAt &&
         other.email == email &&
         other.name == name &&
-        other.studentNumber == studentNumber;
+        other.stdNumber == stdNumber;
   }
 
   @override
@@ -82,6 +88,6 @@ class UserData {
         expireAt.hashCode ^
         email.hashCode ^
         name.hashCode ^
-        studentNumber.hashCode;
+        stdNumber.hashCode;
   }
 }

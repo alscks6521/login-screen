@@ -1,16 +1,12 @@
-## 9W
-1. go_router에 서브routes 설정,  
-2.  headers: {
-              'authorization': 'Bearer ${_controller.getUserData!.accessToken}',
-            },
-3. 클리핑 마스크 = Clip위젯
-```dart
-ClipRRect(
-                    borderRadius: BorderRadius.circular(100),
-                    child: Image.network(
-                      item?.webfor….
-```
-4. 스크롤바 만들기 Scrollbar, ScrollController
-5. GetX Obs, Rxn, Controller
+## 10W
 
-          
+1. ID를 사용하여 Hit 아이템에서 검색 (gallery_controller.dart / provider)
+   1. SearchById.
+   2. List<GalleryItemHits> get galleryItemHits => rxGalleryItem.value?.hits ?? []; getter로 받아오기
+2. 갤러리 detail_screen
+   1. User Avatar
+3. Hero 사용 (gallery_screen.dart)
+4. 캐싱 : Cache. 메모리에 데이터를 넣는. 일명 : RAM / 나중에 그 넣은 메모리에 데이터를 사용
+   1. precacheImage 사용
+5. flutter animate 플러그인 사용
+   1. mapIndexed 사용 (app_drawer.dart)
