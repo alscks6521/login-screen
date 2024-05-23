@@ -1,3 +1,4 @@
+import 'package:daelim_univ/common/widgets/app_scaffold.dart';
 import 'package:flutter/material.dart';
 
 class SettingLocaleScreen extends StatelessWidget {
@@ -5,6 +6,12 @@ class SettingLocaleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return AppScaffold(
+      appBar: AppBar(
+        title: const Text('테마 설정'),
+      ),
+      drawerEnableOpenDragGesture: false,
+      child: const Placeholder(),
+    );
   }
 }

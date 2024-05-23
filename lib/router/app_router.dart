@@ -66,10 +66,12 @@ final router = GoRouter(
       routes: [
         GoRoute(
           path: AppScreen.settingTheme,
+          name: AppScreen.settingTheme,
           builder: (context, state) => const SettingThemeScreen(),
         ),
         GoRoute(
           path: AppScreen.settingLocale,
+          name: AppScreen.settingLocale,
           builder: (context, state) => const SettingLocaleScreen(),
         ),
       ],
@@ -82,10 +84,10 @@ class AppScreen {
   static String signup = '/signup';
   static String main = '/main';
   static String lifecycle = '/lifecycle';
-  // gallery...
+  // Gallery...
   static String gallery = '/gallery';
   static String gallerydetail = 'detail';
-  // setting...
+  // Setting...
   static String setting = '/setting';
   static String settingTheme = 'theme';
   static String settingLocale = 'locale';

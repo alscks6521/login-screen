@@ -1,5 +1,6 @@
 import 'package:daelim_univ/provider/auth_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
+import 'package:daelim_univ/theme/app_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,19 +24,8 @@ class MyApp extends StatelessWidget {
       themeMode: debugBrightnessOverride == Brightness.dark //
           ? ThemeMode.dark
           : ThemeMode.light,
-      theme: ThemeData.light().copyWith(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green,
-        ),
-      ),
-      // darkTheme: ThemeData.light().copyWith(),
-      darkTheme: ThemeData.dark().copyWith(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.red,
-        ),
-        //화면에 보이는 위젯들의 밀도
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
     );
   }
 }
