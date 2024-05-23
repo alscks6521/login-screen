@@ -6,7 +6,6 @@ import 'package:daelim_univ/screens/lifecycle_screens/lifecycle_scrren.dart';
 import 'package:daelim_univ/screens/login/login_screen.dart';
 import 'package:daelim_univ/setting/setting_screen.dart';
 import 'package:daelim_univ/setting/subscreens/setting_locale_screen.dart';
-import 'package:daelim_univ/setting/subscreens/setting_theme_screen.dart';
 import 'package:daelim_univ/signup/sign_up_screen.dart';
 import 'package:easy_extension/easy_extension.dart';
 import 'package:get/instance_manager.dart';
