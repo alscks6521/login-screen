@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class SettingController extends GetxController {
   // RxBool 인스턴스 멤버로 변경
-  RxBool rxIsDarkMode = (StorageHelper.isDarkMode ?? false).obs;
+  RxBool rxIsDarkMode = StorageHelper.isDarkMode.obs;
 
   // 테마 모드를 변경하는 메서드
   void changeThemeMode(bool isDarkMode) {
