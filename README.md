@@ -15,10 +15,8 @@ final RxBool rxIsDarkMode = false.obs;
    ),
 ```
 
-변수를 get형식으로 obs 지정한 뒤, Obx위젯으로 스위치 설정하기
+2. 변수를 get형식으로 obs 지정한 뒤, Obx위젯으로 스위치 설정하기
 
-2. Flutter에서 국제화(internationalization)하기: 여러 언어와 지역에서 사용할 수 있도록 지원하는 과정.  
-   국제화는 텍스트, 날짜, 숫자 및 기타 형식을 사용자가 속한 문화와 언어에 맞게 조정하는 것을 포함
 3. ListTile.divideTiles는 Iterable<Widget>을 반환한다. 따라서 이를 List로 변환하고 ListView 또는 Column 등의 children 속성에 전달해야한다. 주어진 코드에서 "..." 연산자를 사용해 해결할 수 있다.
 
 ```dart
@@ -26,8 +24,10 @@ final RxBool rxIsDarkMode = false.obs;
                ...
 ```
 
-1. 추가한 플러그인 : day_night_themed_switch, flex_color_scheme, shared_preferences
-2. 추가된 파일 : Setting폴더
+4. 추가한 플러그인 : day_night_themed_switch, flex_color_scheme, shared_preferences
+5. 추가된 파일 : (Setting폴더), (helpers폴더), (provider > setting_controller.dart파일)
+6. 주의사항 : 구글 정책에 따라 이제 자동로그인을 하면 안된다. 저장하더라도 사용자 이메일만 저장
+7. 비밀번호는 전부 암호화!
 
 ---
 
