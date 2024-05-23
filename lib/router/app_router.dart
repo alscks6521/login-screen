@@ -65,11 +65,6 @@ final router = GoRouter(
       builder: ((context, state) => const SettingScreen()),
       routes: [
         GoRoute(
-          path: AppScreen.settingTheme,
-          name: AppScreen.settingTheme,
-          builder: (context, state) => const SettingThemeScreen(),
-        ),
-        GoRoute(
           path: AppScreen.settingLocale,
           name: AppScreen.settingLocale,
           builder: (context, state) => const SettingLocaleScreen(),
@@ -89,6 +84,5 @@ class AppScreen {
   static String gallerydetail = 'detail';
   // Setting...
   static String setting = '/setting';
-  static String settingTheme = 'theme';
   static String settingLocale = 'locale';
 }
