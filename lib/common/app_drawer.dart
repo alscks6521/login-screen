@@ -4,6 +4,7 @@ import 'package:easy_extension/easy_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -72,6 +73,19 @@ class AppDrawer extends StatelessWidget {
                   ).animate().slideX(delay: (i * 100).toMillisecond);
                 },
               ).toList(),
+            ),
+          ),
+          const Divider(),
+          InkWell(
+            onTap: () => context.push(
+              AppScreen.setting,
+            ),
+            child: const ListTile(
+              title: Text(
+                '앱 설정',
+                style: TextStyle(fontSize: 14),
+              ),
+              trailing: Icon(Icons.arrow_right),
             ),
           ),
         ],

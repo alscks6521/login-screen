@@ -4,6 +4,9 @@ import 'package:daelim_univ/screens/gallery/gallery_detail_screen.dart';
 import 'package:daelim_univ/screens/gallery/gallery_screen.dart';
 import 'package:daelim_univ/screens/lifecycle_screens/lifecycle_scrren.dart';
 import 'package:daelim_univ/screens/login/login_screen.dart';
+import 'package:daelim_univ/setting/setting_screen.dart';
+import 'package:daelim_univ/setting/subscreens/setting_locale_screen.dart';
+import 'package:daelim_univ/setting/subscreens/setting_theme_screen.dart';
 import 'package:daelim_univ/signup/sign_up_screen.dart';
 import 'package:easy_extension/easy_extension.dart';
 import 'package:get/instance_manager.dart';
@@ -37,10 +40,12 @@ final router = GoRouter(
       path: AppScreen.lifecycle,
       builder: ((context, state) => const LifecycleScreen()),
     ),
+
+    /// 갤러리
     GoRoute(
       path: AppScreen.gallery,
       builder: ((context, state) => const GalleryScreen()),
-      // r서브 화면
+      // 갤러리 서브 화면
       routes: [
         GoRoute(
           name: AppScreen.gallerydetail,
@@ -54,6 +59,21 @@ final router = GoRouter(
         ),
       ],
     ),
+    // 설정
+    GoRoute(
+      path: AppScreen.setting,
+      builder: ((context, state) => const SettingScreen()),
+      routes: [
+        GoRoute(
+          path: AppScreen.settingTheme,
+          builder: (context, state) => const SettingThemeScreen(),
+        ),
+        GoRoute(
+          path: AppScreen.settingLocale,
+          builder: (context, state) => const SettingLocaleScreen(),
+        ),
+      ],
+    ),
   ],
 );
 
@@ -62,6 +82,11 @@ class AppScreen {
   static String signup = '/signup';
   static String main = '/main';
   static String lifecycle = '/lifecycle';
+  // gallery...
   static String gallery = '/gallery';
   static String gallerydetail = 'detail';
+  // setting...
+  static String setting = '/setting';
+  static String settingTheme = 'theme';
+  static String settingLocale = 'locale';
 }
