@@ -41,22 +41,49 @@ class _LoginScreenState extends State<LoginScreen> {
     var email = _emailController.text;
     var password = _pwController.text;
 
-    var result = await _controller.signin(
-      email: email,
-      password: password,
-    );
-
-    var succes = result.$1;
-    var errorMsg = result.$2;
-
-    if (succes) {
+    await _controller.signin(email: email, password: password).then(
+      (result) {
+        var success = result.$1;
+        var errorMsg = result.$2;
+        if (success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('로그인을 성공했습니다.'),
+            ),
+          );
+          context.push(AppScreen.main);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('로그인 실패: $errorMsg'),
+            ),
+          );
+        }
+      },
+    ).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('로그인을 성공했습니다.'),
+        SnackBar(
+          content: Text('로그인 중 오류 발생: $error'),
         ),
       );
-      context.pushReplacement(AppScreen.main);
-    }
+    });
+
+    // var result = await _controller.signin(
+    //   email: email,
+    //   password: password,
+    // )
+
+    // var succes = result.$1;
+    // var errorMsg = result.$2;
+
+    // if (succes) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     SnackBar(
+    //       content: Text('로그인을 성공했습니다. $errorMsg'),
+    //     ),
+    //   );
+    //   context.pushReplacement(AppScreen.main);
+    // }
   }
 
   Future<void> _login() async {

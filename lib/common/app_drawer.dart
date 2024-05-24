@@ -1,14 +1,20 @@
 import 'package:daelim_univ/provider/auth_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
+import 'package:easy_extension/easy_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
-  Widget _ListTile(BuildContext context,
-      {required String path, required IconData icon, required String title}) {
+  Widget _ListTile(
+    BuildContext context, {
+    required String path,
+    required IconData icon,
+    required String title,
+  }) {
     return ListTile(
       onTap: () => router.push(path),
       leading: Icon(icon),
@@ -16,6 +22,24 @@ class AppDrawer extends StatelessWidget {
       trailing: const Icon(Icons.arrow_right),
     );
   }
+
+  List<Map<String, dynamic>> get _titlesData => [
+        {
+          'path': AppScreen.main,
+          'icon': Icons.home,
+          'title': "홈",
+        },
+        {
+          'path': AppScreen.lifecycle,
+          'icon': Icons.cyclone,
+          'title': "라이프사이클",
+        },
+        {
+          'path': AppScreen.gallery,
+          'icon': Icons.image,
+          'title': "갤러리",
+        },
+      ];
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +52,7 @@ class AppDrawer extends StatelessWidget {
           DrawerHeader(
             child: ListTile(
               title: Text(
-                userData != null ? '${userData.name} (${userData.studentNumber})' : '로그인 상태가 아닙니다.',
+                userData != null ? '${userData.name} (${userData.stdNumber})' : '로그인 상태가 아닙니다.',
                 style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
@@ -39,11 +63,29 @@ class AppDrawer extends StatelessWidget {
           ),
           Expanded(
             child: ListView(
-              children: [
-                _ListTile(context, path: AppScreen.main, icon: Icons.home, title: "Home"),
-                _ListTile(context,
-                    path: AppScreen.gallery, icon: Icons.browse_gallery, title: "Gallery")
-              ],
+              children: _titlesData.mapIndexed(
+                (i, e) {
+                  return _ListTile(
+                    context,
+                    path: e['path'],
+                    icon: e['icon'],
+                    title: e['title'],
+                  ).animate().slideX(delay: (i * 100).toMillisecond);
+                },
+              ).toList(),
+            ),
+          ),
+          const Divider(),
+          InkWell(
+            onTap: () => context.push(
+              AppScreen.setting,
+            ),
+            child: const ListTile(
+              title: Text(
+                '앱 설정',
+                style: TextStyle(fontSize: 14),
+              ),
+              trailing: Icon(Icons.arrow_right),
             ),
           ),
         ],

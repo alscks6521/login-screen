@@ -1,8 +1,9 @@
-import 'dart:convert';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
-import 'package:daelim_univ/models/gallery_item.dart';
+import 'package:daelim_univ/provider/gallery_controller.dart';
+import 'package:daelim_univ/router/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 class GalleryScreen extends StatefulWidget {
   const GalleryScreen({super.key});
@@ -12,69 +13,20 @@ class GalleryScreen extends StatefulWidget {
 }
 
 class _GalleryScreenState extends State<GalleryScreen> {
-  GalleryItem? _galleryItem;
-  bool _isLoading = false;
+  final _controller = Get.put(GalleryController());
+  late final ScrollController _scrollController;
 
-  void showLoading() {
-    setState(() {
-      _galleryItem = null;
-      _isLoading = true;
-    });
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _controller.fetchGallery();
   }
 
-  void hideLoading() {
-    _isLoading = false;
-  }
-
-  Future<void> _fetchData() async {
-    showLoading();
-
-    final response = await http
-        .post(
-      Uri.parse('http://121.140.73.79:60080/functions/v1/gallery'),
-      body: jsonEncode({
-        'q': '새',
-        'per_page': 4,
-      }),
-    )
-        .catchError((e) {
-      return http.Response('$e', 401);
-    });
-    // 받아내서 바로 사용하는 법{
-    // await http
-    //     .get(
-    //                 //https는 SSL인증서 문제, hhtps는 443이라는 규칙?있음
-    //       Uri.parse('https://121.140.73.79:18443/functions/v1/hello'),
-    //     )
-    //     .then((value) => {});}
-    var body = jsonDecode(utf8.decode(response.bodyBytes));
-
-    hideLoading();
-
-    if (response.statusCode != 200) {
-      debugPrint('불러오기 에러: $body');
-      return;
-    }
-    // debugPrint('galleryItem: $body');
-    setState(() {
-      _galleryItem = GalleryItem.fromMap(body);
-    });
-
-    debugPrint('galleryItem: ${_galleryItem!.hits.length}');
-
-    // //-------
-    // var jsonString = response.body;
-
-    // // API값 정렬해서 확인과정
-    // var unescapedJsonString = jsonString.replaceAll('\\', '');
-    // var jsonData = json.decode(unescapedJsonString);
-    // var prettyJsonString = const JsonEncoder.withIndent('  ').convert(jsonData);
-
-    // debugPrint('응답 데이터: $prettyJsonString');
-
-    // debugPrint('Total: ${jsonData['total']}');
-    // debugPrint('Total Hits: ${jsonData['totalHits']}');
-    // debugPrint('First Hit ID: ${jsonData['hits'][0]['id']}');
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -85,31 +37,63 @@ class _GalleryScreenState extends State<GalleryScreen> {
         title: const Text("갤러리"),
       ),
       floatActionButton: FloatingActionButton(
-        onPressed: () {
-          // API 호출
-          _fetchData();
-        },
-        child: const Icon(Icons.refresh),
+        onPressed: _controller.fetchGallery, // 방법2
+        child: const Icon(
+          Icons.refresh,
+        ),
       ),
-      child: _isLoading
+      child: Obx(() => _controller.rxGalleryItem.value == null
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
+          : Scrollbar(
+              controller: _scrollController,
+              thumbVisibility: true, // 스크롤바 항상 표시
+              thickness: 5,
+              radius: const Radius.circular(10),
+              child: GridView.builder(
+                controller: _scrollController,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                ),
+                itemCount: _controller.rxGalleryItem.value?.hits.length ?? 0,
+                itemBuilder: (context, index) {
+                  var item = _controller.rxGalleryItem.value?.hits[index];
+
+                  return GestureDetector(
+                    onTap: () async {
+                      if (item?.largeImageURL != null) {
+                        await precacheImage(
+                          Image.network(item!.largeImageURL).image,
+                          context,
+                        );
+                      }
+                      // Log.green({item?.toJson()}),
+                      if (context.mounted) {
+                        context.pushNamed(
+                          AppScreen.gallerydetail,
+                          pathParameters: {
+                            'id': (item?.id ?? -1).toString(),
+                          },
+                        );
+                      }
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Hero(
+                        tag: item?.id ?? -1,
+                        child: Image.network(
+                          item?.webformatURL ?? '',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
-              itemCount: _galleryItem?.hits.length ?? 0,
-              itemBuilder: (context, index) {
-                var item = _galleryItem?.hits[index];
-                return Image.network(
-                  item?.webformatURL ?? '',
-                  fit: BoxFit.fill,
-                );
-              },
-            ),
+            )),
     );
   }
 }

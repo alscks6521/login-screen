@@ -1,28 +1,46 @@
-## 4차 Get 로그인 상태관리 , GoRouter
-- find , put,
-- redirect 앱 url 보안
+## 11W
 
-  
-## 3차 TextEditingController, GlobalKey<FormState>, 버튼 데이터 그룹화  
-- sign_up_screen.dart / login_text_filed.dart  
-- DataClass Model 말고 간단한 레코드 방식 이용. 람다형식  
-  **List<(GlobalKey<FormState>, TextEditingController, String)> get _buttons => [  
-        (_emialKey, _emailController, '이메일'),  
-        (_pwKey, _pwController, '패스워드'),  
-        (_pwConfirmKey, _pwConfirmController, '패스워드 확인'),  
-        (_nameKey, _nameController, '이름'),  
-        (_stnKey, _stnController, '학번'),  
-      ];**
-- TextFiled의 validator 사용
+1. Flutter theme 테마모드 만들기 (setting)
 
-## 2차 API 사용하기
-- ListTile
-- Http 패키지,
-- jsonEncode
-  
-## 1차 Commit 
-- LoginScreen 구현
-- Router
-- Theme
-- TextEditingController
-- 중복 위젯 분리 ( Widgets ( Scaffold... ) 등 )
+```dart
+final RxBool rxIsDarkMode = false.obs;
+
+ Obx(
+      () => Switch.adaptive(
+         value: rxIsDarkMode.value,
+         onChanged: (value) {
+         rxIsDarkMode.value = value;
+         },
+      ),
+   ),
+```
+
+2. 변수를 get형식으로 obs 지정한 뒤, Obx위젯으로 스위치 설정하기
+
+3. ListTile.divideTiles는 Iterable<Widget>을 반환한다. 따라서 이를 List로 변환하고 ListView 또는 Column 등의 children 속성에 전달해야한다. 주어진 코드에서 "..." 연산자를 사용해 해결할 수 있다.
+
+```dart
+...ListTile.divideTiles(
+               ...
+```
+
+4. 추가한 플러그인 : day_night_themed_switch, flex_color_scheme, shared_preferences
+5. 추가된 파일 : (Setting폴더), (helpers폴더), (provider > setting_controller.dart파일)
+6. 주의사항 : 구글 정책에 따라 이제 자동로그인을 하면 안된다. 저장하더라도 사용자 이메일만 저장
+7. 비밀번호는 전부 암호화!
+
+---
+
+## 10W
+
+1. ID를 사용하여 Hit 아이템에서 검색 (gallery_controller.dart / provider)
+   1. SearchById.
+   2. List<GalleryItemHits> get galleryItemHits => rxGalleryItem.value?.hits ?? []; getter로 받아오기
+2. 갤러리 detail_screen
+   1. User Avatar
+3. Hero 사용 (gallery_screen.dart)
+4. 캐싱 : Cache. 메모리에 데이터를 넣는. 일명 : RAM / 나중에 그 넣은 메모리에 데이터를 사용
+   1. precacheImage 사용
+   2. 캐싱은 어떠한 버벅거림으로 인해 사용하지 않을 예정!
+5. flutter animate 플러그인 사용
+   1. mapIndexed 사용 (app_drawer.dart)
