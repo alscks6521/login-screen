@@ -1,3 +1,8 @@
+## 12W
+
+1. 언어변경 Intl(한국어, 영어)
+   1. setting_locale_screen.dart
+
 ## 11W
 
 1. Flutter theme 테마모드 만들기 (setting)
