@@ -7,11 +7,36 @@ class SettingLocaleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      appBar: AppBar(
-        title: const Text('테마 설정'),
-      ),
       drawerEnableOpenDragGesture: false,
-      child: const Placeholder(),
+      appBar: AppBar(
+        title: const Text('언어변경'),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+            Card(
+              child: Column(
+                children: ListTile.divideTiles(
+                  context: context,
+                  tiles: [
+                    ListTile(
+                      title: const Text('한국어'),
+                      trailing:
+                          SizedBox(height: 30, child: Checkbox(value: true, onChanged: (value) {})),
+                    ),
+                    ListTile(
+                      title: const Text('English'),
+                      trailing: SizedBox(
+                          height: 30, child: Checkbox(value: false, onChanged: (value) {})),
+                    ),
+                  ],
+                ).toList(),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
