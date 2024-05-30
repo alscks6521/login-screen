@@ -1,8 +1,9 @@
+import 'package:daelim_univ/common/helpers/locale_helper.dart';
 import 'package:daelim_univ/common/helpers/storage_helper.dart';
+import 'package:daelim_univ/localization/localization.dart';
 import 'package:daelim_univ/provider/auth_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
 import 'package:daelim_univ/theme/app_theme.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,6 +22,9 @@ class MyApp extends StatelessWidget {
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,
       routeInformationProvider: router.routeInformationProvider,
+      translations: Localization(),
+      locale: StorageHelper.locale,
+      fallbackLocale: LocaleHelper.english,
       title: 'Flutter Login',
       themeMode: StorageHelper.themeMode,
       theme: AppTheme.light,
@@ -28,21 +32,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
-
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     Brightness brightness = SchedulerBinding.instance.window.platformBrightness;
-
-//     return MaterialApp.router(
-//       routerConfig: router,
-//       title: 'Flutter Login',
-//       themeMode: brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light,
-//       theme: ThemeData.light().copyWith(colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.green)),
-//       darkTheme: ThemeData.dark().copyWith(colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.red)),
-//     );
-//   }
-// }
