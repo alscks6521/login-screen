@@ -1,4 +1,5 @@
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
+import 'package:daelim_univ/localization/app_string.dart';
 import 'package:daelim_univ/provider/gallery_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
     return AppScaffold(
       drawerEnableOpenDragGesture: true,
       appBar: AppBar(
-        title: const Text("갤러리"),
+        title: Text(AppString.gallery.tr),
       ),
       floatActionButton: FloatingActionButton(
         onPressed: _controller.fetchGallery, // 방법2

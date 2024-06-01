@@ -1,5 +1,7 @@
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
+import 'package:daelim_univ/localization/app_string.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -9,8 +11,8 @@ class MainScreen extends StatelessWidget {
     return AppScaffold(
         drawerEnableOpenDragGesture: true,
         appBar: AppBar(
-          title: const Text(
-            '메인',
+          title: Text(
+            AppString.home.tr,
           ),
         ),
         child: const Placeholder());

@@ -2,6 +2,8 @@
 
 1. 언어변경 Intl(한국어, 영어)
    1. setting_locale_screen.dart
+2. 추가된 파일 (localization폴더), (helpers > locale_helper.dart)
+3. Android Jetpack. compose
 
 ## 11W
 

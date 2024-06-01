@@ -1,5 +1,9 @@
+import 'package:daelim_univ/common/helpers/locale_helper.dart';
+import 'package:daelim_univ/common/helpers/storage_helper.dart';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
+import 'package:daelim_univ/localization/app_string.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SettingLocaleScreen extends StatelessWidget {
   const SettingLocaleScreen({super.key});
@@ -9,7 +13,7 @@ class SettingLocaleScreen extends StatelessWidget {
     return AppScaffold(
       drawerEnableOpenDragGesture: false,
       appBar: AppBar(
-        title: const Text('언어변경'),
+        title: Text(AppString.appSetting.tr),
       ),
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -22,13 +26,33 @@ class SettingLocaleScreen extends StatelessWidget {
                   tiles: [
                     ListTile(
                       title: const Text('한국어'),
-                      trailing:
-                          SizedBox(height: 30, child: Checkbox(value: true, onChanged: (value) {})),
+                      trailing: SizedBox(
+                        height: 30,
+                        child: Checkbox(
+                          value: StorageHelper.locale == LocaleHelper.korean,
+                          onChanged: (value) {
+                            value ??= false;
+                            if (value) {
+                              StorageHelper.setLocale(LocaleHelper.korean);
+                            }
+                          },
+                        ),
+                      ),
                     ),
                     ListTile(
                       title: const Text('English'),
                       trailing: SizedBox(
-                          height: 30, child: Checkbox(value: false, onChanged: (value) {})),
+                        height: 30,
+                        child: Checkbox(
+                          value: StorageHelper.locale == LocaleHelper.english,
+                          onChanged: (value) {
+                            value ??= false;
+                            if (value) {
+                              StorageHelper.setLocale(LocaleHelper.english);
+                            }
+                          },
+                        ),
+                      ),
                     ),
                   ],
                 ).toList(),

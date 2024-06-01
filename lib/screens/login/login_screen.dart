@@ -1,6 +1,7 @@
 import 'package:daelim_univ/common/app_assets.dart';
 import 'package:daelim_univ/common/widgets/app_icon_text_btn.dart';
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
+import 'package:daelim_univ/localization/app_string.dart';
 import 'package:daelim_univ/provider/auth_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
 import 'package:daelim_univ/screens/login/widgets/login_text_filed.dart';
@@ -157,36 +158,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 40,
               ),
 
-              LoginTextFiled(
-                controller: _emailController,
-                labelText: 'ID',
-              ),
+              LoginTextFiled(controller: _emailController, labelText: AppString.email.tr),
               const SizedBox(
                 height: 20,
               ),
               LoginTextFiled(
-                controller: _pwController,
-                obscureText: true,
-                labelText: 'PW',
-              ),
-              SizedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text('비밀번호 찾기'),
-                    )
-                  ],
-                ),
-              ),
+                  controller: _pwController, obscureText: true, labelText: AppString.password.tr),
+
               const SizedBox(
                 height: 40,
               ),
               // 로그인 버튼
               AppIconTextBtn(
                 icon: Icons.login,
-                text: '로그인',
+                text: AppString.login.tr,
                 onPressed: _signin,
               ),
               // 회원가입 버튼
@@ -195,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   context.go(AppScreen.signup);
                 },
                 color: Colors.yellow,
-                child: const Text('회원가입'),
+                child: Text(AppString.signUp.tr),
               ),
             ],
           ),

@@ -1,6 +1,8 @@
 import 'package:daelim_univ/common/widgets/app_scaffold.dart';
+import 'package:daelim_univ/localization/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:get/get.dart';
 
 class LifecycleScreen extends StatefulWidget {
   const LifecycleScreen({super.key});
@@ -40,10 +42,10 @@ class _LifecycleScreenState extends State<LifecycleScreen> {
     return AppScaffold(
       drawerEnableOpenDragGesture: true,
       appBar: AppBar(
-        title: const Text('LIFECYCLE'),
+        title: Text(AppString.lifecycle.tr),
       ),
-      child: const Center(
-        child: Text('Lifecycle'),
+      child: Center(
+        child: Text(AppString.lifecycle.tr),
       ),
     );
   }

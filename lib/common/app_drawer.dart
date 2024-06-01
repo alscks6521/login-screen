@@ -1,3 +1,4 @@
+import 'package:daelim_univ/localization/app_string.dart';
 import 'package:daelim_univ/provider/auth_controller.dart';
 import 'package:daelim_univ/router/app_router.dart';
 import 'package:easy_extension/easy_extension.dart';
@@ -27,17 +28,17 @@ class AppDrawer extends StatelessWidget {
         {
           'path': AppScreen.main,
           'icon': Icons.home,
-          'title': "홈",
+          'title': AppString.home.tr,
         },
         {
           'path': AppScreen.lifecycle,
           'icon': Icons.cyclone,
-          'title': "라이프사이클",
+          'title': AppString.lifecycle.tr,
         },
         {
           'path': AppScreen.gallery,
           'icon': Icons.image,
-          'title': "갤러리",
+          'title': AppString.gallery.tr,
         },
       ];
 
@@ -80,12 +81,12 @@ class AppDrawer extends StatelessWidget {
             onTap: () => context.push(
               AppScreen.setting,
             ),
-            child: const ListTile(
+            child: ListTile(
               title: Text(
-                '앱 설정',
-                style: TextStyle(fontSize: 14),
+                AppString.appSetting.tr,
+                style: const TextStyle(fontSize: 14),
               ),
-              trailing: Icon(Icons.arrow_right),
+              trailing: const Icon(Icons.arrow_right),
             ),
           ),
         ],
