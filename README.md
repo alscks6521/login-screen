@@ -1,3 +1,7 @@
+## 14W
+1. Drag / Drop
+   1. Target
+
 ## 12W
 
 1. 언어변경 Intl(한국어, 영어)
